@@ -18,11 +18,7 @@ class Event(commands.Cog):
           os.system('kill 1')
         else:
           pass
-
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        print(f'{message.author} said {message.content}')
-
+    
     @commands.Cog.listener()
     async def on_ready(self):
         await self.client.change_presence(activity=Activity(
