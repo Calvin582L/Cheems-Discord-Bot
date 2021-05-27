@@ -19,12 +19,19 @@ class Event(commands.Cog):
         else:
           pass
     
+    @tasks.loop(seconds=5.0)
+    async def check_servers(self):
+      await self.client.change_presence(activity=Activity(
+            name=f"{len(self.client.guilds)} Servers | c!help",
+            type=ActivityType.watching))
+    
     @commands.Cog.listener()
     async def on_ready(self):
         await self.client.change_presence(activity=Activity(
             name=f"{len(self.client.guilds)} Servers | c!help",
             type=ActivityType.watching))
         print("We have logged in as {0.user}".format(self.client))
+        self.check_servers.start()
     
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
