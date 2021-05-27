@@ -1,0 +1,6 @@
+python==3.8
+discord==1.0.1
+flask==2.0.0
+praw==7.2.0
+pymediawiki==0.7.0
+akinator.py==4.1.0
