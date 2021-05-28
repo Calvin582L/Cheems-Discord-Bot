@@ -18,7 +18,7 @@ page4.add_field(name="Games Command", value="`c!aki` - Play The Aki Game In Disc
 page5=discord.Embed(title="Utility!", description="Use `c!info <command name>` For Extended Info!\n Example: `c!info poll`, `c!info wiki`", color=discord.Colour.blue())
 page5.add_field(name="Utility Commands", value="`c!bible` - In The Beginning God Created Discord \n`c!quote` - A Random Quote Keeps Me Up Today \n`c!userinfo` - Gives Info Of Member (Mention Required) \n`c!coin` - Flips A Coin \n`c!dice` - Rolls A Dice \n`c!poll` - Vote For Poll (1 Sentence & Minimum 2 Options Required) \n`c!wiki` - Wiki In Discord \n`c!weather` - Shows Weather From City (City Name Required)")
 
-page6=discord.Embed(title="Upcoming...", description="Maybe A Website? Also Give Feedback With...", color=discord.Colour.purple())
+page6=discord.Embed(title="Our website! Check it for information and to give feedback!", description="[Website](https://cheemsdiscordbot.xyz/)", color=discord.Colour.purple())
 
 
 class Help(commands.Cog):
