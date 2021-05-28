@@ -26,7 +26,7 @@ class Help(commands.Cog):
         self.client = client
         client.help_pages = [page1, page2, page3, page4, page5, page6]
   
-    @commands.command()
+    @commands.command(name="help", aliases=['helpmenu', 'helpme'])
     async def help(self, ctx):
        await ctx.message.delete()
        page1.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
