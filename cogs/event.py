@@ -19,7 +19,7 @@ class Event(commands.Cog):
         else:
           pass
     
-    @tasks.loop(seconds=5.0)
+    @tasks.loop(seconds=60.0)
     async def check_servers(self):
       await self.client.change_presence(activity=Activity(
             name=f"{len(self.client.guilds)} Servers | c!help",
