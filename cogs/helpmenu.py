@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 
-page1 = discord.Embed(title= "Cheems Help - `Created By CA1V1N & SamuelTheManual`", description="My Prefix Is `c!` \n\nReact With ❌ To Delete This Message!\nUse The Arrows To Scroll Through Commands! \n\nUse `c!info <command name>` For Extended Info!\n Example: `c!info reddit`, `c!info joke`", colour=discord.Colour.red())
+page1 = discord.Embed(title= "Cheems Help - `Created By CA1V1N & SamuelTheManual`", description="My Prefix Is `c!` [Invite Link](https://discord.com/api/oauth2/authorize?client_id=843502995147718676&permissions=3959909462&scope=bot)\n\nReact With ❌ To Delete This Message!\nUse The Arrows To Scroll Through Commands! \n\nUse `c!info <command name>` For Extended Info!\n Example: `c!info reddit`, `c!info joke`", colour=discord.Colour.red())
 page1.add_field(name="Categories", value="<:1307793940001:816484124168683540>`Fun` - Have A Great Time With Our Silly Commands! \n<:fatyoshi:816489219996254229>`Mods` - Easy To Use Commands To Manage Your Server! 🎮`Games` - Play Exciting Single & Multiplayer Games! \n🛠️`Utility` - Very Useful Commands!")
 page1.set_thumbnail(url="https://cdn.discordapp.com/avatars/815270826420469811/d842498ecdebc1a4fec34788e725b451.webp?size=1024")
 
@@ -18,7 +18,7 @@ page4.add_field(name="Games Command", value="`c!aki` - Play The Aki Game In Disc
 page5=discord.Embed(title="Utility!", description="Use `c!info <command name>` For Extended Info!\n Example: `c!info poll`, `c!info wiki`", color=discord.Colour.blue())
 page5.add_field(name="Utility Commands", value="`c!bible` - In The Beginning God Created Discord \n`c!quote` - A Random Quote Keeps Me Up Today \n`c!userinfo` - Gives Info Of Member (Mention Required) \n`c!coin` - Flips A Coin \n`c!dice` - Rolls A Dice \n`c!poll` - Vote For Poll (1 Sentence & Minimum 2 Options Required) \n`c!wiki` - Wiki In Discord \n`c!weather` - Shows Weather From City (City Name Required)")
 
-page6=discord.Embed(title="Our website! Check it for information and to give feedback!", description="[Website](https://cheemsdiscordbot.xyz/)", color=discord.Colour.purple())
+page6=discord.Embed(title="Our website!", description="[Check it for information and to give feedback!](https://cheemsdiscordbot.xyz/)", color=discord.Colour.purple())
 
 
 class Help(commands.Cog):
