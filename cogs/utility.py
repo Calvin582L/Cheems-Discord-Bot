@@ -5,16 +5,6 @@ class Utility(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    
-    @commands.command()
-    async def coin(self, ctx):
-     choices = ["Heads", "Tails"]
-     random_coin = random.choice(choices)
-     em = discord.Embed(description = f"**May The Flips Be In Your Favor: {random_coin}**", color = ctx.author.color)
-     em.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
-     await ctx.message.delete()
-     await ctx.send(embed=em)
-
     @commands.command()
     async def dice(self, ctx):
      rand_dice = random.randint(1, 6)
