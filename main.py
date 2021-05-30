@@ -3,8 +3,8 @@ import os
 from discord.ext import commands
 
 client = discord.Client()
-client = commands.Bot(command_prefix='c!', case_insensitive=True)
-client.remove_command('help')
+client = commands.Bot(command_prefix='c!', case_insensitive=True, help_command=None)
+
 
 for filename in os.listdir('./cogs'): 
     if filename.endswith('.py'):
