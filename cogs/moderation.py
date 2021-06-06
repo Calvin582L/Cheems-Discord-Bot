@@ -2,6 +2,7 @@ import asyncio
 import discord
 import time
 from discord.ext import commands
+from discord.ext.commands import has_permissions, MissingPermissions
 from discord import Embed, Color
 from typing import Optional
 from pathlib import Path
@@ -12,10 +13,9 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def delete(self, ctx, amount=1): 
-        amount = amount + 1
+    async def delete(self, ctx, *, amount: str,): 
         await ctx.channel.purge(limit=amount)
-        if amount-1 == 1:
+        if amount == 1:
          embed=discord.Embed(title="Deleted!", description=f"{amount-1} Message Was Deleted By {ctx.author.mention}", color=ctx.author.color)
          embed.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
          await ctx.send(embed=embed)
@@ -23,6 +23,13 @@ class Moderation(commands.Cog):
          embed=discord.Embed(title="Deleted!", description=f"{amount-1} Messages Were Deleted By {ctx.message.author}", color=ctx.author.color)
          embed.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
          await ctx.send(embed=embed)
+
+    @delete.error
+    async def delete_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguement (number of messages to delete). Ex. c!delete 5 ")
+      if isinstance(error, MissingPermissions):
+          await ctx.send("❌ You don't have permission to delete messages (Admin required).")
 
     @commands.command(name="ban", aliases=['ban_user', 'delete_user'])
     @commands.has_permissions(administrator=True)
@@ -37,6 +44,15 @@ class Moderation(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @ban_command.error
+    async def ban_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguements (user) and (reason). Ex. c!ban <user> <reason> ")
+      if isinstance(error, commands.BadArgument):
+        await ctx.send("Error, user not found. Try again. ")
+      if isinstance(error, MissingPermissions):
+          await ctx.send("❌ You don't have permission to ban users (Admin required).")
+
     @commands.command(name="kick", aliases=['kick_user'])
     @commands.has_permissions(administrator=True)
     async def kick_command(self, ctx, user : discord.Member, *, reason):
@@ -50,6 +66,15 @@ class Moderation(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @kick_command.error
+    async def kick_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguements (user) and (reason). Ex. c!kick <user> <reason> ")
+      if isinstance(error, commands.BadArgument):
+        await ctx.send("Error, user not found. Try again. ")
+      if isinstance(error, MissingPermissions):
+          await ctx.send("❌ You don't have permission to kick users (Admin required).")
+
     @commands.command(name="warn", aliases=['sudo'])
     @commands.has_permissions(administrator=True)
     async def warn_command(self, ctx, user : discord.Member, *, reason):
@@ -60,6 +85,15 @@ class Moderation(commands.Cog):
                         value=f"{user.mention} you got a warning in the guild from {ctx.author.mention} for the following reason:\n**{reason}**.\nPlease stop doing wrong!")
 
         await ctx.send(embed=embed)
+
+    @warn_command.error
+    async def warn_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguements (user) and (reason). Ex. c!warn <user> <reason> ")
+      if isinstance(error, commands.BadArgument):
+        await ctx.send("Error, user not found. Try again. ")
+      if isinstance(error, MissingPermissions):
+          await ctx.send("❌ You don't have permission to kick users (Admin required).")
 
 def setup(client):
     client.add_cog(Moderation(client))
