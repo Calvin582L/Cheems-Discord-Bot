@@ -19,21 +19,41 @@ class API(commands.Cog):
         temperature = temperature.replace("째", "°")
         description = weather_json_data['description']
         wind = weather_json_data['wind']
-        em = discord.Embed(title="Weather: \nThe Temperature For {} Currently Is {}! \nDescription: {}\nWind: {} ".format(x.title(), temperature, description, wind), color=ctx.author.color)
-        em.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=em)
+
+        if temperature != "":
+          em = discord.Embed(title="Weather: \nThe Temperature For {} Currently Is {}! \nDescription: {}\nWind: {} ".format(x.title(), temperature, description, wind), color=ctx.author.color)
+          em.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
+          await ctx.send(embed=em)
+        else:
+          await ctx.send("City not found. Please try again. Ex. c!weather <city> ")
+
+    @weather.error
+    async def weather_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguement (city). Ex. c!weather <city> ")
 
     @commands.command()
     async def bible(self, ctx, x: str, y: str):
+
         response = requests.get("https://bible-api.com/" + x + "%20" + y)
         bible_json_data = json.loads(response.text)
-        bible = bible_json_data['text']
-        em = discord.Embed(title="Bible!", description=f"{bible}", color=ctx.author.color)
-        em.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
-        
-        await ctx.message.delete()
-        await ctx.send(embed=em)
-        
+
+        if 'text' in bible_json_data:
+          bible = bible_json_data['text']
+          em = discord.Embed(title="Bible!", description=f"{bible}", color=ctx.author.color)
+          em.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
+
+          await ctx.message.delete()
+          await ctx.send(embed=em)
+
+        elif 'error' in bible_json_data:
+          await ctx.send("Error, verse/passage not found. Please try again. Ex. c!bible genesis 1:1, c!bible john 1:1-4 ")
+
+    @bible.error
+    async def bible_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, verse/passage not found due to missing arguements (Chapter & Verse Required). Please try again. Ex. c!bible genesis 1:1, c!bible john 1:1-4 ")
+    
     @commands.command()
     async def waifu(self, ctx, x: str):
         await ctx.message.delete()
@@ -44,8 +64,12 @@ class API(commands.Cog):
         em.set_image(url=f"{waifu_pic}")
         em.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=em)
-       
 
+    @waifu.error
+    async def waifu_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, missing arugements. Required <category>. Catagories: waifu, shinobu, neko, megumin ,bully, cuddle, cry, hug, awoo, kiss, lick, pat, smug, bonk, yeet, blush, smile, wave, highfive, handhold, nom, bite, glomp, kill, slap, happy, wink, poke, dance, cringe, blush. Ex. c!waifu slap   ")
+       
     @commands.command()
     async def waifunsfw(self, ctx, x: str):
         if ctx.channel.is_nsfw():
@@ -62,8 +86,12 @@ class API(commands.Cog):
                                color=ctx.author.color)
             await ctx.message.delete()
             await ctx.send(embed=em)
-          
 
+    @waifunsfw.error
+    async def waifunsfw_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, missing arugements. Required <category>. Catagories: waifu, neko, trap, blowjob. Ex. c!waifunsfw neko")
+          
     @commands.command()
     async def quote(self, ctx):
         response = requests.get("https://zenquotes.io/api/random")
