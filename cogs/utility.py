@@ -42,6 +42,13 @@ class Utility(commands.Cog):
             await react_message.add_reaction(reaction)
         await react_message.edit_message(embed=embed)
 
+    @poll.error
+    async def poll_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguements (One Sentence With Quotaion & Two Options Required). Ex. c!poll 'Do You Like Ice Cream' 'Yes' 'No' 'Idk'. Remember SPACES and QUOTES. ")
+      if isinstance(error, commands.BadArgument):
+        await ctx.send("Error, bad arugument. Try again. ")
+
     @commands.command()
     async def eightball(self, ctx, *, question: str):
       await ctx.message.delete()
@@ -49,6 +56,13 @@ class Utility(commands.Cog):
       embed=discord.Embed(title=f":8ball: {question}", description=f"My Whimsical Answer Is: \n **{random.choice(eightball_ans)}**", color=ctx.author.color)
       embed.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
       await ctx.send(embed=embed)
+
+    @eightball.error
+    async def eightball_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguements (Question). Ex. c!eightball Is SamuelTheManual Smexy? ")
+      if isinstance(error, commands.BadArgument):
+        await ctx.send("Error, bad arugument. Try again. ")
 
 
 def setup(client):
