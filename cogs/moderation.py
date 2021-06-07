@@ -13,14 +13,14 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def delete(self, ctx, *, amount: str,): 
+    async def delete(self, ctx, *, amount: int,): 
         await ctx.channel.purge(limit=amount)
         if amount == 1:
-         embed=discord.Embed(title="Deleted!", description=f"{amount-1} Message Was Deleted By {ctx.author.mention}", color=ctx.author.color)
+         embed=discord.Embed(title="Deleted!", description=f"{amount} Message Was Deleted By {ctx.author.mention}", color=ctx.author.color)
          embed.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
          await ctx.send(embed=embed)
         elif amount-1 > 1:
-         embed=discord.Embed(title="Deleted!", description=f"{amount-1} Messages Were Deleted By {ctx.message.author}", color=ctx.author.color)
+         embed=discord.Embed(title="Deleted!", description=f"{amount} Messages Were Deleted By {ctx.message.author}", color=ctx.author.color)
          embed.set_footer(text="Command Requested By {}".format(ctx.message.author.name), icon_url=ctx.message.author.avatar_url)
          await ctx.send(embed=embed)
 
