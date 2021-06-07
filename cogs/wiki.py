@@ -56,6 +56,13 @@ class WIKI(commands.Cog):
             p = wikipedia.page(results[4])
             await ctx.send(p.url)
             break
+
+    @wiki.error
+    async def wiki_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Error, please enter the required arguements (search). Ex. c!wiki obama ")
+      if isinstance(error, commands.BadArgument):
+        await ctx.send("Error, wiki not found. Try again. ")
  
 def setup(client):
     client.add_cog(WIKI(client))
