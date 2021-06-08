@@ -4,7 +4,7 @@ import os
 import random
 import asyncio
 from discord.ext import commands
-from prawcore import NotFound
+from prawcore import NotFound, ServerError, Forbidden, InvalidToken, BadRequest, PrawcoreException, InvalidInvocation, RequestException, ResponseException
 
 client_id = os.getenv('CLIENT_ID')
 client_secret = os.getenv('CLIENT_SECRET')
@@ -170,6 +170,22 @@ class Reddit(commands.Cog):
 
         except NotFound:
           await ctx.send("Error, subreddit not found. Please check spelling and try again. ")
+        except ServerError:
+          await ctx.send("Server Error, please try again later. ")
+        except Forbidden:
+          await ctx.send("Error, forbidden access. ")
+        except InvalidToken:
+          await ctx.send("Error, invalid token. ")
+        except BadRequest:
+          await ctx.send("Error, bad request. ")
+        except PrawcoreException:
+          await ctx.send("Error, prawcore exception. ")
+        except InvalidInvocation:
+          await ctx.send("Error, invalid invocation. ")
+        except RequestException:
+          await ctx.send("Error, incomplete http request. ")
+        except ResponseException:
+          await ctx.send("Error, issue with complete http request. ")
 
     @reddit.error
     async def reddit_error(self, ctx, error):
