@@ -12,7 +12,7 @@ class Moderation(commands.Cog):
         self.client = client
 
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_messages=True)
     async def delete(self, ctx, *, amount: int,): 
         await ctx.channel.purge(limit=amount)
         if amount == 1:
@@ -29,10 +29,10 @@ class Moderation(commands.Cog):
       if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("Error, please enter the required arguement (number of messages to delete). Ex. c!delete 5 ")
       if isinstance(error, MissingPermissions):
-          await ctx.send("❌ You don't have permission to delete messages (Admin required).")
+          await ctx.send("❌ You don't have permission to delete messages (Manage messages required).")
 
     @commands.command(name="ban", aliases=['ban_user', 'delete_user'])
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(ban_members=True)
     async def ban_command(self, ctx, user : discord.Member, *, reason):
         await user.ban(reason=reason)
 
@@ -51,10 +51,10 @@ class Moderation(commands.Cog):
       if isinstance(error, commands.BadArgument):
         await ctx.send("Error, user not found. Try again. ")
       if isinstance(error, MissingPermissions):
-          await ctx.send("❌ You don't have permission to ban users (Admin required).")
+          await ctx.send("❌ You don't have permission to ban users (Ban members required).")
 
     @commands.command(name="kick", aliases=['kick_user'])
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(kick_members=True)
     async def kick_command(self, ctx, user : discord.Member, *, reason):
         await user.kick(reason=reason)
 
@@ -73,10 +73,10 @@ class Moderation(commands.Cog):
       if isinstance(error, commands.BadArgument):
         await ctx.send("Error, user not found. Try again. ")
       if isinstance(error, MissingPermissions):
-          await ctx.send("❌ You don't have permission to kick users (Admin required).")
+          await ctx.send("❌ You don't have permission to kick users (Kick members required).")
 
     @commands.command(name="warn", aliases=['sudo'])
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(kick_members=True)
     async def warn_command(self, ctx, user : discord.Member, *, reason):
         embed = Embed(color=discord.Color.gold())
         embed.set_footer(text=f"Timestamp: {time.ctime()}\nInvoked by {ctx.author}", icon_url=ctx.author.avatar_url)
@@ -93,7 +93,7 @@ class Moderation(commands.Cog):
       if isinstance(error, commands.BadArgument):
         await ctx.send("Error, user not found. Try again. ")
       if isinstance(error, MissingPermissions):
-          await ctx.send("❌ You don't have permission to kick users (Admin required).")
+          await ctx.send("❌ You don't have permission to warn users (Kick members required).")
 
 def setup(client):
     client.add_cog(Moderation(client))
